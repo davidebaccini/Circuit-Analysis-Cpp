@@ -13,3 +13,7 @@ Per effettuare nodal e mesh analysis dobbiamo iterare per tutti i nodi oppure pe
 annessi a quei nodi o appartenenti a quelle mesh. Cosa vuol dire? Che ci è necessario avere vettori che contengono
 tutti i component che creiamo, per poterci iterare sopra. inoltre all'interno di ogni mesh o node sarà necessario tenere
 traccia di tutti i branch associati, in un vettore.
+
+Inoltre per poter trovare un Nodo/Branch/Mesh dal suo ID faremo in modo che queste strutture siano Hash Maps da cui 
+accedere direttamente al nodo voluto tramite l'ID, oppure possiamo fare si che l'ID sia automaticamente assegnato come
+index della cella del vettore in cui piazzeremo quel component.

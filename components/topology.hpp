@@ -36,15 +36,14 @@ public:
     }
 };
 
-class Meshes {
-    int number;
-
+class Mesh {
+    int ID;
+    std::vector<Component> comps;
 public:
-    Meshes(int n) {
-        this->number = n;
+    Mesh(int n, Component c) {
+        this->ID = n;
+        comps.push_back(c);
     }
-
-
 };
 
 class Node {
@@ -60,4 +59,5 @@ public:
     int getId() {
         return id;
     }
+
 };

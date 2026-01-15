@@ -13,7 +13,7 @@
 #include "util/parser.hpp"
 #include "util/component.hpp"
 #include "components/topology.hpp"
-#include <map>
+#include <unordered_map>
 
 const char SEPARATOR = ';';
 
@@ -50,7 +50,19 @@ Circuit discover_topology(std::vector<Component> components) {
     Circuit circuit = Circuit(n_branches, n_nodes, n_meshes);
     return circuit;
 }
+    std::unordered_map<std::string,Component> branches;
+    std::unordered_map<std::string, Node> nodes;
+    std::unordered_map<std::string, Mesh> meshes; 
 
+    void makeNode(const std::vector<std::string>& tokens, int j){
+        if(nodes[tokens[4]]){
+            }
+            //the logic here is that it should check token[4], because that is the node id,
+            //and see if the node already exists in the vector Nodes, which contains all the instantiated nodes.
+            //If it doesnt exist in the vector Nodes than it should make a new one and push it in that vector.
+            //In any case it should push back the branch Id (=tokens[1]) in the vector connected_ids
+            return;
+    }
 /*
 int kvl(Circuit circuit, std::vector<Component> components) {
     int n_meshes = circuit.get_meshes();
@@ -76,10 +88,6 @@ int kvl(Circuit circuit, std::vector<Component> components) {
 */
 
 int main() {
-    std::map<int,bool> nodes;
-    
-    //std::cout << "Start\n";
-    std::vector<Component> components;
 
     // Read the file
     auto lines = readLines("util/netlist.csv");
@@ -88,13 +96,13 @@ int main() {
     int i=0;
     for(auto& line : lines) {
         auto tokens = split(line, SEPARATOR);
-        components.push_back(makeComponent(tokens, i));
+        branches.push_back(makeComponent(tokens, i));
         i++;
     }
 
-    std::cout << "Size: " << components.size();
+    std::cout << "Size: " << branches.size();
 
-    Circuit circuit = discover_topology(components);
+    Circuit circuit = discover_topology(branches);
     circuit.print();
         
 }
