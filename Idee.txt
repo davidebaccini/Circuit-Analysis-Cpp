@@ -7,3 +7,9 @@ Seconda Idea:
 Usare nodal analysis.
 Controllo che branch sono connessi ad un nodo.
 Applico la KCL al nodo, con le correnti con versi arbitrari (es: tutte le correnti vanno dal nodo n al nodo n+1 di quel component, 2 -> 3).
+
+Nota 15/01 : Struttura dati
+Per effettuare nodal e mesh analysis dobbiamo iterare per tutti i nodi oppure per tutte le mesh, e per tutti i branch
+annessi a quei nodi o appartenenti a quelle mesh. Cosa vuol dire? Che ci è necessario avere vettori che contengono
+tutti i component che creiamo, per poterci iterare sopra. inoltre all'interno di ogni mesh o node sarà necessario tenere
+traccia di tutti i branch associati, in un vettore.

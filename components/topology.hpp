@@ -52,9 +52,9 @@ class Node {
     int id;
     std::vector<int> connected_ids;
 public:
-    Node(int id, component comp) {
+    Node(int id, Component comp) {
         this->id = id;
-
+        connected_ids.push_back(comp.getId());
     }
 
     int getId() {
