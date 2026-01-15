@@ -1,0 +1,9 @@
+Prima Idea:
+Assegnare ad ogni branch una corrente chiamandola: "I_ + nome del componente" (escluse le sources).
+Dopo aver asseganto la corrente controllo che dei componenti abbiano dei nodi in comune.
+Se questo accade controllo anche il numero di mesh, così posso assegnare la stessa corrente a due componenti che hanno almeno un nodo in comune.
+
+Seconda Idea:
+Usare nodal analysis.
+Controllo che branch sono connessi ad un nodo.
+Applico la KCL al nodo, con le correnti con versi arbitrari (es: tutte le correnti vanno dal nodo n al nodo n+1 di quel component, 2 -> 3).
