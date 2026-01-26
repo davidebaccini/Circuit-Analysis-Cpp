@@ -45,10 +45,13 @@ public:
 };
 
 class Node {
-    
+    int id;
 public:
+    Node(){}
     std::vector<Component> connected;
-    Node(Component comp) {
+    Node(Component comp, int id) {
         connected.push_back(comp);
+        id = id;
     }
+    int getId(){return id;}
 };

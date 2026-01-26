@@ -50,21 +50,51 @@ Circuit discover_topology(std::vector<Component> components) {
     std::unordered_map<int, Node> nodes;
     std::vector<Mesh> meshes;
 
-void makeNodes(std::vector<Component>& comps) {
-    for (Component& x : comps) {
-        int n = x.get_n1();
-
+void makeNodes() {
+    for (Component& x : branches) {
+        int na = x.get_n1();
+        int nb = x.get_n2();
         // se il nodo NON esiste, viene creato
-        if (nodes.find(n) == nodes.end()) {
-            nodes.emplace(n, Node(x));
+        if (nodes.find(na) == nodes.end()) {
+            nodes.emplace(na, Node(x,na));
+        } else if( nodes.find(nb) == nodes.end()){
+            nodes.emplace(nb, Node(x,nb));
         }
 
-        // collega il componente
-        nodes[n].connected.push_back(x);
+        // collega i componenti
+        nodes[na].connected.push_back(x);
+        nodes[nb].connected.push_back(x);
     }
 }
-void makeMeshes(std::vector<Component>& comps, std::unordered_map<int, Node> nodes){
-    
+
+std::vector<Node> makeMesh(Node obj, Node *current, std::vector<Node> path){
+        Node *current = current;
+    for(Component &c : current->connected){
+        int na = c.get_n1();
+        int nb = c.get_n2();
+        if(nodes[na].getId() == obj.getId() || nodes[nb].getId() == obj.getId()){
+            if(nodes[na].getId() == obj.getId()){
+                path.push_back(nodes[na]);
+                return path;
+            } else{
+                path.push_back(nodes[nb]);
+                return path;
+            }
+            //recursive mesh finding algorithm
+        }else{
+        if(nodes[na].getId() == obj.getId()){
+            current = &nodes[nb];
+            path.push_back(*current);
+        }else{
+            current = &nodes[na];
+            path.push_back(*current);
+        }
+        makeMesh(obj, current, path);
+        }
+    }
+    }
+void makeMeshes(){
+
 }
 
 
