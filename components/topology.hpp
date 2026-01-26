@@ -37,27 +37,17 @@ public:
 };
 
 class Mesh {
-    int ID;
     std::vector<Component> comps;
 public:
-    Mesh(int n, Component c) {
-        this->ID = n;
+    Mesh(Component c) {
         comps.push_back(c);
     }
 };
 
 class Node {
-    // nel constructor di node dovremmo aggiungere il node alla map nodes
-    int id;
-    std::vector<int> connected_ids;
+    std::vector<Component> connected;
 public:
-    Node(int id, Component comp) {
-        this->id = id;
-        connected_ids.push_back(comp.getId());
+    Node(Component comp) {
+        connected.push_back(comp);
     }
-
-    int getId() {
-        return id;
-    }
-
 };
