@@ -45,8 +45,9 @@ public:
 };
 
 class Node {
-    std::vector<Component> connected;
+    
 public:
+    std::vector<Component> connected;
     Node(Component comp) {
         connected.push_back(comp);
     }

@@ -21,22 +21,19 @@ double ohm_current(double V, double R) {
     return V/R;
 }
 
-int topology_law(int b, int n) {
+int num_meshes(int b, int n) {
     return b - n + 1;
 }
 
 // This function uses the fundamental law of totpology to find the number of meshes
-Circuit discover_topology(std::unordered_map<int, Component> components) {
+Circuit discover_topology(std::vector<Component> components) {
     int n_branches = components.size();
     int n_nodes = 0;
     int n1, n2;
     // Cycles through the elements and find the number of nodes
-    for(int i=0; i<n_branches; i++) {
-        Component item = components[i];
-        
-        n1 = item.get_n1();
-        n2 = item.get_n2();
-
+    for(Component &x : components) {
+        n1 = x.get_n1();
+        n2 = x.get_n2();
         if(n1 > n_nodes) {
             n_nodes = n1;
         }
@@ -44,14 +41,32 @@ Circuit discover_topology(std::unordered_map<int, Component> components) {
             n_nodes = n2;
         }
     }
-    int n_meshes = topology_law(n_branches, n_nodes);
+    int n_meshes = num_meshes(n_branches, n_nodes);
 
     Circuit circuit = Circuit(n_branches, n_nodes, n_meshes);
     return circuit;
 }
-    std::unordered_map<int, Component> branches;
+    std::vector<Component> branches;
     std::unordered_map<int, Node> nodes;
-    std::unordered_map<int, Mesh> meshes; 
+    std::vector<Mesh> meshes;
+
+void makeNodes(std::vector<Component>& comps) {
+    for (Component& x : comps) {
+        int n = x.get_n1();
+
+        // se il nodo NON esiste, viene creato
+        if (nodes.find(n) == nodes.end()) {
+            nodes.emplace(n, Node(x));
+        }
+
+        // collega il componente
+        nodes[n].connected.push_back(x);
+    }
+}
+void makeMeshes(std::vector<Component>& comps, std::unordered_map<int, Node> nodes){
+    
+}
+
 
 
 /*
@@ -86,8 +101,8 @@ int main() {
 
     int i=0;
     for(auto& line : lines) {
-        auto tokens = split(line, SEPARATOR);
-        branches[i] = makeComponent(tokens);
+        std::vector<std::string> tokens = split(line, SEPARATOR);
+        branches.push_back(Component(tokens));
         i++;
     }
 
